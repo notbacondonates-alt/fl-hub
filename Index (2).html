@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FL Hub | Official Discord & Scripts</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+        :root {
+            --bg-base: #0a0505;
+            --bg-surface: #140a0a;
+            --accent-red: #ff3333;
+            --accent-orange: #ff8c00;
+            --discord: #5865F2; /* Standard Discord Blue */
+            --gradient: linear-gradient(135deg, var(--accent-red), var(--accent-orange));
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-base); color: var(--text-main); overflow-x: hidden; }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 10%; background: rgba(10, 5, 5, 0.8);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            position: fixed; width: 100%; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(255, 69, 0, 0.1);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
+        .logo span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--text-main); }
+
+        .discord-btn {
+            background: var(--discord); color: white; padding: 8px 16px;
+            border-radius: 6px; font-size: 0.9rem; text-decoration: none;
+            font-weight: 700; transition: 0.3s; box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
+        }
+        .discord-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(88, 101, 242, 0.5); }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 100px 20px 50px; position: relative;
+        }
+
+        .glow {
+            position: absolute; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(255, 69, 0, 0.15) 0%, rgba(0,0,0,0) 70%);
+            top: 40%; left: 50%; transform: translate(-50%, -50%); z-index: -1;
+            filter: blur(80px); animation: pulse 5s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse { 0% { transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.1); } }
+
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; margin-bottom: 15px; }
+        .hero p { color: var(--text-muted); max-width: 550px; margin-bottom: 40px; line-height: 1.6; }
+
+        /* Scripts Wrapper */
+        .scripts-wrapper { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 650px; }
+        .script-group {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 69, 0, 0.15);
+            padding: 20px; border-radius: 16px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .script-group:hover { border-color: var(--accent-orange); background: rgba(255, 69, 0, 0.03); }
+
+        .badge { display: inline-block; background: var(--gradient); padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; margin-bottom: 10px; }
+        .script-box { display: flex; align-items: center; gap: 15px; background: rgba(0,0,0,0.3); padding: 10px 15px; border-radius: 8px; }
+        .code { flex-grow: 1; font-family: monospace; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem; }
+
+        .copy-btn { background: var(--gradient); border: none; color: white; padding: 8px 18px; border-radius: 6px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .copy-btn:hover { transform: scale(1.05); }
+
+        /* Features Section */
+        .features { padding: 100px 10%; background: var(--bg-surface); text-align: center; }
+        .features h2 { font-size: 2.5rem; margin-bottom: 50px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card { background: rgba(255,255,255,0.02); padding: 35px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent-orange); }
+
+        /* Community CTA */
+        .community { padding: 80px 20px; text-align: center; }
+        .community h3 { font-size: 2rem; margin-bottom: 20px; }
+        .community-btn {
+            display: inline-block; background: var(--discord); color: white;
+            padding: 15px 40px; border-radius: 10px; font-weight: 800;
+            text-decoration: none; font-size: 1.1rem; animation: discordPulse 2s infinite;
+        }
+
+        @keyframes discordPulse {
+            0% { box-shadow: 0 0 0 0 rgba(88, 101, 242, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(88, 101, 242, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(88, 101, 242, 0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">FL<span>HUB</span></div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#features">Features</a>
+            <a href="https://discord.gg/tW8RfWYTTp" target="_blank" class="discord-btn">Join Discord</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="glow"></div>
+        <h1>Ignite Your Gameplay.</h1>
+        <p>The premium toolset for mobile & PC. Join thousands of users in our community and elevate your experience.</p>
+        
+        <div class="scripts-wrapper">
+            <div class="script-group">
+                <span class="badge">V2 | LATEST</span>
+                <div class="script-box">
+                    <div class="code" id="v2">loadstring(game:HttpGet("https://pastefy.app/pJVFf85T/raw"))()</div>
+                    <button class="copy-btn" onclick="copy('v2', this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="script-group">
+                <span class="badge" style="background: #444;">V1 | LEGACY</span>
+                <div class="script-box">
+                    <div class="code" id="v1">loadstring(game:HttpGet("https://pastebin.com/raw/k5dXEdY4"))()</div>
+                    <button class="copy-btn" onclick="copy('v1', this)">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="features" id="features">
+        <h2>Features & Tools</h2>
+        <div class="features-grid">
+            <div class="card"><h3>Fluent UI</h3><p>Clean, modern, and zero-lag interface designed for maximum efficiency.</p></div>
+            <div class="card"><h3>Aimbot & ESP</h3><p>Advanced visual and combat aids optimized for high-performance gameplay.</p></div>
+            <div class="card"><h3>Mobile Optimized</h3><p>Seamless controls and menus perfectly fitted for touchscreens.</p></div>
+        </div>
+    </div>
+
+    <div class="community">
+        <h3>Stay Updated</h3>
+        <p style="color: var(--text-muted); margin-bottom: 30px;">Get the latest scripts, news, and support directly from our staff.</p>
+        <a href="https://discord.gg/tW8RfWYTTp" target="_blank" class="community-btn">Join the Discord Server</a>
+    </div>
+
+    <script>
+        function copy(id, btn) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const oldText = btn.innerText;
+                btn.innerText = "COPIED!";
+                btn.style.background = "#fff"; btn.style.color = "#000";
+                setTimeout(() => {
+                    btn.innerText = oldText;
+                    btn.style.background = ""; btn.style.color = "";
+                }, 2000);
+            });
+        }
+    </script>
+
+</body>
+</html>
